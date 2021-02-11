@@ -6,7 +6,6 @@ ARG DUMB_INIT_VERSION="1.2.2"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
-# hadolint ignore=DL3003,DL4001
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
     curl \
@@ -29,7 +28,7 @@ RUN apt-get update && \
     nodejs \
     npm \
     node-gyp \
-    libssl1.0-dev \
+    libssl1.1 \
     libgtk2.0-0 \
     libgtk-3-0 \
     libgbm-dev \
@@ -43,7 +42,7 @@ RUN apt-get update && \
     xvfb \
     fonts-liberation \
     xdg-utils \
-    firefox \
+    firefox-esr \
   && cd /tmp \
   && [[ $(lsb_release -cs) == "xenial" ]] && ( wget --quiet "https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_$(uname -i | sed 's/x86_64/amd64/g').deb" && dpkg -i dumb-init_*.deb && rm dumb-init_*.deb ) || ( apt-get install -y --no-install-recommends dumb-init ) \
   && curl -sL https://www.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz -o git.tgz \
