@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM ubuntu:focal
 LABEL maintainer="webmaster@moddylp.de"
 
 ARG GIT_VERSION="2.29.0"
