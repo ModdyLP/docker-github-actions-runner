@@ -1,11 +1,9 @@
 FROM ubuntu:focal
-LABEL maintainer="myoung34@my.apsu.edu"
+LABEL maintainer="webmaster@moddylp.de"
 
 ARG GIT_VERSION="2.29.0"
 ARG DUMB_INIT_VERSION="1.2.2"
-ARG DOCKER_KEY="7EA0A9C3F273FCD8"
 
-ENV DOCKER_COMPOSE_VERSION="1.27.4"
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
@@ -15,7 +13,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 # hadolint ignore=DL3003,DL4001
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
-    awscli \
     curl \
     tar \
     unzip \
@@ -29,12 +26,29 @@ RUN apt-get update && \
     gettext \
     liblttng-ust0 \
     libcurl4-openssl-dev \
-    inetutils-ping \
     jq \
     wget \
-    dirmngr \
     openssh-client \
     locales \
+    nodejs \
+    		npm \
+    		node-gyp \
+    		nodejs-dev \
+    		libssl1.0-dev \
+    		libgtk2.0-0 \
+    		libgtk-3-0 \
+    		libgbm-dev \
+    		libnotify-dev \
+    		libgconf-2-4 \
+    		libnss3 \
+    		libxss1 \
+    		libasound2 \
+    		libxtst6 \
+    		xauth \
+    		xvfb \
+    		fonts-liberation \
+    		xdg-utils \
+    		firefox
   && locale-gen en_US.UTF-8 \
   && dpkg-reconfigure locales \
   && c_rehash \
@@ -47,12 +61,9 @@ RUN apt-get update && \
   && make \
   && make install \
   && cd / \
-  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ${DOCKER_KEY} \
-  && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
-  && [[ $(lsb_release -cs) == "focal" ]] && ( add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu focal stable" ) || ( add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" ) \
-  && apt-get update \
-  && apt-get install -y docker-ce docker-ce-cli containerd.io --no-install-recommends --allow-unauthenticated \
-  && curl -sL "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
-  && chmod +x /usr/local/bin/docker-compose \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /tmp/*
+
+RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+&& dpkg -i google-chrome-stable_current_amd64.deb \
+&& npm install -g yarn
