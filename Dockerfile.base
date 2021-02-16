@@ -29,6 +29,7 @@ RUN apt-get update && \
     openssh-client \
     locales \
     nodejs \
+    nodejs-dev \
     npm \
     node-gyp \
     libssl1.1 \
@@ -64,5 +65,5 @@ RUN apt-get update && \
   && rm -rf /tmp/*
 
 RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-&& dpkg -i google-chrome-stable_current_amd64.deb \
-&& npm install -g yarn
+RUN dpkg -i google-chrome-stable_current_amd64.deb \
+RUN npm install -g yarn
