@@ -60,11 +60,10 @@ RUN apt-get update && \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /tmp/*
 
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-RUN export NVM_DIR="$HOME/.nvm"
-RUN "$NVM_DIR/nvm.sh"
-RUN "$NVM_DIR/bash_completion"
-RUN nvm install node --lts --latest-npm
+RUN cd ~
+RUN curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
+RUN nodesource_setup.sh
+RUN apt update && apt install nodejs
 
 RUN node --version
 
