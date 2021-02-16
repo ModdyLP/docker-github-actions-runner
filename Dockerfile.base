@@ -73,7 +73,7 @@ RUN curl https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash 
     && source $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
-    && nvm use default
+    && nvm use default \
     && nvm --version
 
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
